@@ -1,0 +1,85 @@
+[versions]
+# Kotlin
+kotlin                      = "2.4.21"
+kotlinxDatetime             = "0.8.0"
+kotlinxSerializationJSON    = "1.11.0"
+kotlinxCoroutines           = "1.10.2"
+
+# gRPC / Protocol Buffers
+grpc                        = "1.84.2"
+grpcKotlin                  = "1.5.0"
+protobuf                    = "4.33.6"
+protobufPlugin              = "0.10.0"
+
+# PostgreSQL
+postgresql                  = "42.7.14"
+hikariCP                    = "7.1.0"
+flyway                      = "13.10.0"
+
+# Google Cloud
+googleCloudPubSub           = "1.155.0"
+
+# Observability
+micrometer                  = "1.17.0"
+slf4j                       = "2.0.20"
+logback                     = "1.5.37"
+
+# Testing
+junit                       = "6.0.0"
+
+
+[libraries]
+# Kotlin
+kotlinGradlePlugin      = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlinxDatetime         = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+kotlinxSerialization    = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJSON" }
+kotlinxCoroutines       = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+
+# gRPC
+grpcNetty               = { module = "io.grpc:grpc-netty-shaded", version.ref = "grpc" }
+grpcProtobuf            = { module = "io.grpc:grpc-protobuf", version.ref = "grpc" }
+grpcStub                = { module = "io.grpc:grpc-stub", version.ref = "grpc" }
+grpcKotlinStub          = { module = "io.grpc:grpc-kotlin-stub", version.ref = "grpcKotlin" }
+grpcServices            = { module = "io.grpc:grpc-services", version.ref = "grpc" }
+grpcInprocess           = { module = "io.grpc:grpc-inprocess", version.ref = "grpc" }
+grpcTesting             = { module = "io.grpc:grpc-testing", version.ref = "grpc" }
+
+# Protocol Buffers
+protobufJava            = { module = "com.google.protobuf:protobuf-java", version.ref = "protobuf" }
+
+# PostgreSQL
+postgresql              = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+hikariCP                = { module = "com.zaxxer:HikariCP", version.ref = "hikariCP" }
+flywayCore              = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
+flywayPostgresql        = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
+
+# Google Cloud
+googleCloudPubSub       = { module = "com.google.cloud:google-cloud-pubsub", version.ref = "googleCloudPubSub" }
+
+# Observability
+micrometerCore          = { module = "io.micrometer:micrometer-core", version.ref = "micrometer" }
+micrometerPrometheus    = { module = "io.micrometer:micrometer-registry-prometheus", version.ref = "micrometer" }
+slf4j                   = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+logback                 = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+
+# Testing
+junitJupiter            = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
+junitPlatformLauncher   = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit" }
+
+
+[bundles]
+kotlinxEcosystem        = ["kotlinxDatetime", "kotlinxSerialization", "kotlinxCoroutines"]
+
+grpcServer              = ["grpcNetty", "grpcProtobuf", "grpcStub", "grpcKotlinStub", "grpcServices"]
+
+postgresqlPersistence   = ["postgresql", "hikariCP", "flywayCore", "flywayPostgresql"]
+
+observability           = ["micrometerCore", "micrometerPrometheus", "slf4j", "logback"]
+
+grpcTesting             = ["grpcInprocess", "grpcTesting"]
+
+
+[plugins]
+kotlinJvm                   = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlinPluginSerialization   = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+protobuf                    = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
