@@ -1,6 +1,6 @@
+package com.sorenkai.app.com.sorenkai.app
 
-package com.sorenkai.app
-
+import com.sorenkai.app.GrpcServer
 import io.grpc.ManagedChannelBuilder
 import io.grpc.health.v1.HealthCheckRequest
 import io.grpc.health.v1.HealthCheckResponse.ServingStatus

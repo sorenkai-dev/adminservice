@@ -23,6 +23,7 @@ dependencies {
     testImplementation(libs.grpcInprocess)
     testImplementation(libs.junitJupiter)
     testRuntimeOnly(libs.junitPlatformLauncher)
+    testImplementation(libs.mockk)
 }
 
 application {
