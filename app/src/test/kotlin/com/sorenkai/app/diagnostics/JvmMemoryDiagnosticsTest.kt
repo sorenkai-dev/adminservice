@@ -1,6 +1,5 @@
-package com.sorenkai.app.diagnotstics
+package com.sorenkai.app.diagnostics
 
-import com.sorenkai.app.diagnostics.JvmMemoryDiagnosticsProvider
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
