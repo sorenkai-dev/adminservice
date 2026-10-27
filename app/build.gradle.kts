@@ -5,6 +5,11 @@ plugins {
 }
 
 dependencies {
+
+    // Koin
+    implementation(platform(libs.koinBom))
+    implementation(libs.koinCore)
+
     // Modules
     implementation(project(":core"))
     implementation(project(":api"))
@@ -18,12 +23,22 @@ dependencies {
     // Protobuf
     implementation(libs.protobufJava)
 
+    // Monitoring
+    implementation(platform(libs.micrometerBom))
+    implementation(libs.micrometerCore)
+
     // Testing
     testImplementation(kotlin("test"))
+//    testImplementation(platform(libs.koinBom))
+    testImplementation(libs.koinTest)
+    testImplementation(libs.koinTestJunit5)
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlinxCoroutinesTest)
     testImplementation(libs.grpcInprocess)
     testImplementation(libs.junitJupiter)
     testRuntimeOnly(libs.junitPlatformLauncher)
     testImplementation(libs.mockk)
+    testImplementation(libs.micrometer.test)
 }
 
 application {

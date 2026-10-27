@@ -25,7 +25,6 @@ subprojects {
 
     configure<KotlinJvmProjectExtension> {
         jvmToolchain(27)
-
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_26)
         }
@@ -41,7 +40,6 @@ subprojects {
             targetExclude("**/build/**")
             ktlint()
         }
-
         kotlinGradle {
             target("*.gradle.kts")
             ktlint()
@@ -67,5 +65,15 @@ subprojects {
                 TestLogEvent.SKIPPED
             )
         }
+    }
+}
+
+tasks.register<Copy>("installGitHooks") {
+    description = "Installs Git pre-commit hooks from .githooks to .git/hooks."
+    group = "git hooks"
+    from(layout.projectDirectory.dir(".githooks"))
+    into(layout.projectDirectory.dir(".git/hooks"))
+    filePermissions {
+        unix("rwxr-xr-x")
     }
 }

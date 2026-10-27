@@ -1,4 +1,7 @@
 [versions]
+# Koin
+koin                        = "4.2.2"
+
 # Kotlin
 kotlin                      = "2.4.21"
 kotlinxDatetime             = "0.8.0"
@@ -33,6 +36,10 @@ junit                       = "6.1.3"
 mockk                       = "1.14.11"
 
 [libraries]
+# Koin
+koinBom                 = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
+koinCore                = { module = "io.insert-koin:koin-core" }
+
 # Kotlin
 kotlinGradlePlugin      = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlinxDatetime         = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
@@ -62,27 +69,28 @@ flywayPostgresql        = { module = "org.flywaydb:flyway-database-postgresql", 
 googleCloudPubSub       = { module = "com.google.cloud:google-cloud-pubsub", version.ref = "googleCloudPubSub" }
 
 # Observability
-micrometerCore          = { module = "io.micrometer:micrometer-core", version.ref = "micrometer" }
-micrometerPrometheus    = { module = "io.micrometer:micrometer-registry-prometheus", version.ref = "micrometer" }
+micrometerBom           = { module = "io.micrometer:micrometer-bom", version.ref = "micrometer" }
+micrometerCore          = { module = "io.micrometer:micrometer-core" }
+micrometerPrometheus    = { module = "io.micrometer:micrometer-registry-prometheus" }
 slf4j                   = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 logback                 = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
 # Testing
 junitJupiter            = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 junitPlatformLauncher   = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit" }
+koinTest                = { module = "io.insert-koin:koin-test" }
+koinTestJunit5          = { module = "io.insert-koin:koin-test-junit5" }
+kotlin-test             = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlinxCoroutinesTest   = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 mockk                   = { module = "io.mockk:mockk", version.ref = "mockk" }
+micrometer-test         = { module = "io.micrometer:micrometer-observation-test" }
 
 [bundles]
 kotlinxEcosystem        = ["kotlinxDatetime", "kotlinxSerialization", "kotlinxCoroutines"]
-
 grpcServer              = ["grpcNetty", "grpcProtobuf", "grpcStub", "grpcKotlinStub", "grpcServices"]
-
 postgresqlPersistence   = ["postgresql", "hikariCP", "flywayCore", "flywayPostgresql"]
-
 observability           = ["micrometerCore", "micrometerPrometheus", "slf4j", "logback"]
-
 grpcTesting             = ["grpcInprocess", "grpcTesting"]
-
 
 [plugins]
 kotlinJvm                   = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

@@ -9,6 +9,8 @@ option java_outer_classname = "AdminProto";
 service AdminService {
   rpc GetServiceInfo (ServiceInfoRequest)
       returns (ServiceInfoResponse);
+  rpc GetDiagnostics(DiagnosticsRequest)
+      returns (DiagnosticsResponse);
 }
 
 message ServiceInfoRequest {}
@@ -31,4 +33,34 @@ message DeploymentInfo {
   string environment = 1;
   string revision = 2;
   string instance_id = 3;
+}
+
+message DiagnosticsRequest {}
+
+message DiagnosticsResponse {
+  JvmMemoryInfo memory = 1;
+  JvmThreadInfo threads = 2;
+  repeated GarbageCollectorInfo garbage_collectors = 3;
+}
+
+message JvmMemoryInfo {
+  int64 heap_used_bytes = 1;
+  int64 heap_committed_bytes = 2;
+  int64 heap_max_bytes = 3;
+  int64 non_heap_used_bytes = 4;
+  int64 non_heap_committed_bytes = 5;
+  int64 non_heap_max_bytes = 6;
+}
+
+message JvmThreadInfo {
+  int32 live_threads = 1;
+  int32 daemon_threads = 2;
+  int32 peak_threads = 3;
+  int64 total_started_threads = 4;
+}
+
+message GarbageCollectorInfo {
+  string name = 1;
+  int64 collection_count = 2;
+  int64 collection_time_millis = 3;
 }

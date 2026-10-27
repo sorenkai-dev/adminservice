@@ -1,0 +1,47 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    "group:monorepos",
+    "group:recommended"
+  ],
+  "baseBranches": ["dev"],
+  "labels": ["dependencies", "renovate"],
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 10,
+  "packageRules": [
+    {
+      "description": "Automerge non-major updates once CI checks pass",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
+    },
+    {
+      "description": "Require manual review and approval for major breaking changes",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["dependencies", "major-update"]
+    },
+    {
+      "description": "Group all Gradle and Kotlin related updates together",
+      "matchPackagePatterns": [
+        "^org\\.jetbrains\\.kotlin",
+        "^kotlinx-coroutines",
+        "^com\\.diffplug\\.spotless",
+        "^io\\.gitlab\\.arturbosch\\.detekt"
+      ],
+      "groupName": "kotlin-tooling"
+    },
+    {
+      "description": "Group gRPC and Protobuf updates",
+      "matchPackagePatterns": [
+        "^io\\.grpc",
+        "^com\\.google\\.protobuf"
+      ],
+      "groupName": "grpc-protobuf"
+    }
+  ]
+}

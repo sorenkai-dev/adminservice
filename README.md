@@ -1,4 +1,14 @@
-# adminservice
+# Administration Microservice
+
+[![CI](https://github.com/sorenkai-dev/adminservice/actions/workflows/ci.yml/badge.svg)](https://github.com/sorenkai-dev/adminservice/actions/workflows/ci.yml)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-2.4.21-7F52FF.svg?logo=kotlin&logoColor=white)](https://kotlinlang.org/)
+[![JDK](https://img.shields.io/badge/JDK-27-brightgreen.svg?logo=openjdk&logoColor=white)](https://openjdk.org/)
+[![gRPC](https://img.shields.io/badge/gRPC-1.85.0-244c5a.svg)](https://grpc.io/)
+[![Code Style: Spotless](https://img.shields.io/badge/code%20style-Spotless%20%2F%20ktlint-informational.svg)](https://github.com/diffplug/spotless)
+[![Static Analysis: Detekt](https://img.shields.io/badge/static%20analysis-Detekt-blueviolet.svg)](https://detekt.dev/)
+[![Docker](https://img.shields.io/badge/Docker-enabled-2496ED.svg?logo=docker&logoColor=white)](Dockerfile)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+
 
 A multi-module Kotlin JVM gRPC microservice targeting JVM 26 (JDK 27), built with gRPC-Kotlin, Protocol Buffers, and Netty.
 
@@ -48,6 +58,10 @@ This project uses the [Gradle Wrapper](https://docs.gradle.org/current/userguide
 * **Run Detekt static analysis:**
   ```bash
   ./gradlew detekt
+  ```
+* **Install Git pre-commit hooks (Spotless & Detekt):**
+  ```bash
+  ./gradlew installGitHooks
   ```
 * **Clean build outputs:**
   ```bash
@@ -136,3 +150,21 @@ A GitHub Actions CI workflow (`.github/workflows/ci.yml`) runs automatically on 
   - Runs JUnit test suite and builds all artifacts (`./gradlew build`).
 - **Docker Validation:**
   - Validates container packaging by building the multi-stage Docker image using Docker Buildx.
+
+---
+
+## Contributing
+
+Contributions are welcome! Please refer to the [Contributing Guidelines](CONTRIBUTING.md) for details on code style, testing standards, Git pre-commit hooks, and the pull request review process.
+
+---
+
+## Security
+
+For security policies, scope, and instructions on reporting vulnerabilities responsibly, please review our [Security Policy](SECURITY.md).
+
+---
+
+## License
+
+This project is licensed under the Apache License, Version 2.0. See the [LICENSE](LICENSE) and [NOTICE](NOTICE) files for details.

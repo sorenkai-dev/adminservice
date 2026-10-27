@@ -7,7 +7,13 @@ import org.junit.jupiter.api.Test
 import java.lang.management.MemoryMXBean
 import java.lang.management.MemoryUsage
 
+/**
+ * Unit tests verifying [JvmMemoryDiagnosticsProvider] memory extraction logic.
+ */
 class JvmMemoryDiagnosticsTest {
+    /**
+     * Verifies that heap and non-heap used, committed, and max byte measurements are accurately mapped.
+     */
     @Test
     fun `reports heap and non-heap memory in bytes`() {
         val memoryBean = mockk<MemoryMXBean>()
