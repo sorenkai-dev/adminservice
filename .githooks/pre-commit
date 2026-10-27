@@ -1,0 +1,60 @@
+#!/bin/sh
+
+echo "=========================================="
+echo " Running pre-commit hook: Spotless & Detekt"
+echo "=========================================="
+
+# Auto-detect JAVA_HOME if not present in the environment
+if [ -z "$JAVA_HOME" ] || [ ! -x "$JAVA_HOME/bin/java" ] && [ ! -x "$JAVA_HOME/bin/java.exe" ]; then
+    if ! command -v java >/dev/null 2>&1; then
+        for candidate in \
+            "$HOME"/.jdks/* \
+            "$USERPROFILE"/.jdks/* \
+            "$HOME"/.gradle/jdks/* \
+            "$USERPROFILE"/.gradle/jdks/* \
+            "/c/Program Files/Eclipse Adoptium"/jdk-* \
+            "/c/Program Files/Java"/jdk-* \
+            "/Library/Java/JavaVirtualMachines"/*/Contents/Home \
+            /usr/lib/jvm/java-*-openjdk* \
+            /usr/lib/jvm/default-java; do
+            if [ -d "$candidate" ] && { [ -x "$candidate/bin/java" ] || [ -x "$candidate/bin/java.exe" ]; }; then
+                export JAVA_HOME="$candidate"
+                export PATH="$candidate/bin:$PATH"
+                break
+            fi
+        done
+    fi
+fi
+
+# Determine Gradle execution command
+if [ -f "./gradlew" ]; then
+    GRADLE_CMD="./gradlew"
+else
+    GRADLE_CMD="gradle"
+fi
+
+echo ">> Applying Spotless code formatting..."
+$GRADLE_CMD spotlessApply --daemon
+SPOTLESS_EXIT_CODE=$?
+
+if [ $SPOTLESS_EXIT_CODE -ne 0 ]; then
+    echo "❌ Error: 'spotlessApply' failed with exit code $SPOTLESS_EXIT_CODE."
+    echo "Please resolve the formatting/compilation issues before committing."
+    exit $SPOTLESS_EXIT_CODE
+fi
+
+# Re-stage any modified files that were already staged
+git update-index --again
+
+echo ">> Running Detekt static code analysis..."
+$GRADLE_CMD detekt --daemon
+DETEKT_EXIT_CODE=$?
+
+if [ $DETEKT_EXIT_CODE -ne 0 ]; then
+    echo "❌ Error: 'detekt' failed with exit code $DETEKT_EXIT_CODE."
+    echo "Please resolve the Detekt findings before committing."
+    exit $DETEKT_EXIT_CODE
+fi
+
+echo "✅ Pre-commit verification passed."
+exit 0

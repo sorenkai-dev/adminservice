@@ -10,8 +10,8 @@ dependencies {
     implementation(libs.grpcKotlinStub)
 
     // Protobuf
-    implementation(libs.protobufJava)
-    implementation(libs.protobufKotlin)
+    api(libs.protobufJava)
+    api(libs.protobufKotlin)
 
     // Testing
     testImplementation(kotlin("test"))
