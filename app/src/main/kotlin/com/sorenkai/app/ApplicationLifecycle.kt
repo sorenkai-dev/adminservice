@@ -1,5 +1,6 @@
 package com.sorenkai.app
 
+import com.zaxxer.hikari.HikariDataSource
 import org.koin.core.KoinApplication
 import kotlin.concurrent.atomics.AtomicBoolean
 import kotlin.concurrent.atomics.ExperimentalAtomicApi
@@ -7,7 +8,7 @@ import kotlin.concurrent.atomics.ExperimentalAtomicApi
 /**
  * Manages the graceful shutdown lifecycle of the application.
  *
- * Coordinates orderly stopping of the [GrpcServer] and closure of the [KoinApplication]
+ * Coordinates orderly stopping of the [GrpcServer], closing connection pools, and closure of the [KoinApplication]
  * dependency injection container, guaranteeing idempotent execution upon termination.
  *
  * @property server The running gRPC server instance to be stopped.
@@ -23,7 +24,8 @@ class ApplicationLifecycle(
     /**
      * Executes the graceful shutdown sequence idempotently.
      *
-     * Stops the [server] to drain active in-flight requests and subsequently releases all Koin DI singletons.
+     * Stops the [server] to drain active in-flight requests, closes database connection pools,
+     * and subsequently releases all Koin DI singletons.
      */
     fun shutdown() {
         if (!stopped.compareAndSet(false, true)) {
@@ -33,7 +35,12 @@ class ApplicationLifecycle(
         try {
             server.stop()
         } finally {
-            application.close()
+            try {
+                val dataSource = application.koin.getOrNull<HikariDataSource>()
+                dataSource?.close()
+            } finally {
+                application.close()
+            }
         }
     }
 }
